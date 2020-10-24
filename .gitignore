@@ -1,0 +1,100 @@
+*~
+*~$*
+
+# Compiled source #
+###################
+*.pyc
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+# Distribution / packaging #
+############################
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Binary Document Files #
+#########################
+*.xls
+*.xslx
+*.pickle
+*.pkl
+*.p
+
+# Config files that might have passwords #
+##########################################
+*.cfg
+*.ini
+.env*
+
+
+# ipython notebook files #
+##########################
+dev.ipynb
+.ipynb_checkpoints/
+
+# data #
+########
+/data
+/input_data
+/output_data
+
+# testing #
+###########
+.cache
+.pytest_cache
+
+
+# develpment tools #
+####################
+.vscode/*
