@@ -88,6 +88,7 @@ dev.ipynb
 /data
 /input_data
 /output_data
+/output*
 
 # testing #
 ###########
