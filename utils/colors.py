@@ -1,5 +1,7 @@
 # from https://www.colourlovers.com/api/palettes/top
 
+from typing import List
+
 COLORS = {
     "Giant Goldfish": ["#69D2E7", "#A7DBD8", "#E0E4CC", "#F38630", "#FA6900"],
     "(???)": ["#FE4365", "#FC9D9A", "#F9CDAD", "#C8C8A9", "#83AF9B"],
@@ -22,3 +24,20 @@ COLORS = {
     "Headache": ["#655643", "#80BCA3", "#F6F7BD", "#E6AC27", "#BF4D28"],
     "fresh cut day": ["#00A8C6", "#40C0CB", "#F9F2E7", "#AEE239", "#8FBE00"],
 }
+
+def hexify_colors(colors:List[str]):
+    """Add # to color name if not present"""
+
+    color_list = []
+
+    for color in colors:
+
+        if color[0] == "#":
+            
+            color_list.append(color)
+        
+        else:
+
+            color_list.append(f"#{color}")
+
+    return color_list

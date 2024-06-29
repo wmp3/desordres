@@ -10,7 +10,7 @@ import svgwrite
 from svgwrite.shapes import Polygon
 from svgwrite.extensions import Inkscape
 
-from utils.colors import COLORS
+from utils.colors import COLORS, hexify_colors
 
 BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR.joinpath("output")
@@ -50,10 +50,10 @@ class Grid:
     ):
         self.drawing_width = drawing_width
         self.drawing_height = drawing_height
-        self.m_rows = m_rows
-        self.n_columns = n_columns or m_rows
-        self.n_polygons_per_panel = n_polygons_per_panel
-        self.colors = colors
+        self.m_rows = int(m_rows)
+        self.n_columns = int(n_columns) or int(m_rows)
+        self.n_polygons_per_panel = int(n_polygons_per_panel)
+        self.colors = hexify_colors(colors) if colors else None
         self.panel_dims = self.calculate_panel_dims()
         self.panels = panels or self.setup_panels()
         self.pct_jitter_vertices = pct_jitter_vertices
@@ -63,6 +63,7 @@ class Grid:
             f"{self.__class__.__name__} W: {self.drawing_width}, H: {self.drawing_height}, ROWS: {self.m_rows}"
             f"COLS: {self.n_columns}, COLORS: {self.colors}, JITTER: {self.pct_jitter_vertices}"
         )
+
 
     def setup_panels(self):
         """Set up a (x, y) 2-tuple keyed dictionary for panels"""
@@ -216,6 +217,7 @@ class Panel:
     def make_polygons(self, colors, pct_jitter_vertices):
         """Fill panel with randomly sized self.n_polygons count of rectangle-ish polygons"""
 
+
         for i in range(self.n_polygons):
 
             color = random.choice(colors) if len(colors) > 1 else colors[0]
@@ -297,11 +299,11 @@ def main_func(
 
     # add grid objects to drawing
     for coords, panel in grid.panels.items():
-        panel.make_polygons(colors=colors, pct_jitter_vertices=pct_jitter_vertices)
+        panel.make_polygons(colors=grid.colors, pct_jitter_vertices=pct_jitter_vertices)
         for polygon in panel.polygons:
             layer_index = 0
             if len(inkscape_layers) > 1:
-                layer_index = colors.index(polygon.attribs["stroke"])
+                layer_index = grid.colors.index(polygon.attribs["stroke"])
             inkscape_layers[layer_index].add(polygon)
 
     dwg.save()
@@ -312,13 +314,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--width", default=800, help="drawing width in pixels")
-    parser.add_argument("--height", default=1000, help="drawing height in pixels")
+    parser.add_argument("--height", default=800, help="drawing height in pixels")
     parser.add_argument("-m", "--m_rows", default=10, help="count of rows")
     parser.add_argument("-n", "--n_cols", default=8, help="count of columns")
     parser.add_argument("--n_colors", type=int, help="number of colors to use"),
     parser.add_argument(
         "--colors",
-        type=str,
         nargs="+",
         default=None,
         help="list of hex colors e.g., #00FF00 #0000FF #FFFF00 #FF0000. Overrides n_colors.",
