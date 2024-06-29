@@ -21,7 +21,7 @@ Note that each color is separated in the output SVG on its own Inkscape layer fo
 
 From a set of input parameters, generate an SVG file with panels of a random number of rectangles with random offsets of vertices.
 
-`python polygons -h` generates a list of command line options.
+`python polygons.py -h` generates a list of command line options.
 
 
 usage: polygons.py [-h] [--width WIDTH] [--height HEIGHT] [-m M_ROWS]
